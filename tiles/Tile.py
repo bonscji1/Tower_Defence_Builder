@@ -8,7 +8,7 @@ class Tile(Sprite):
     #TODO: change this to modular later
     NUM64 = 64
 
-    def __init__(self, main, location):
+    def __init__(self, main):
         super().__init__()
         #todo:change
         self.width: int = self.NUM64 #in bits
@@ -16,7 +16,6 @@ class Tile(Sprite):
 
         self.screen = main.screen
         self.sprite = None
-        self.location = location
 
     def load_sprite(self, name):
         try:
@@ -26,6 +25,6 @@ class Tile(Sprite):
             print("Terminating program")
             sys.exit(1)
 
-    def blitme(self):
+    def blitme(self, location):
         '''draw at location'''
-        self.screen.blit(self.sprite, self.location)
+        self.screen.blit(self.sprite, location)
