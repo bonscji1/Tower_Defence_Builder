@@ -1,8 +1,12 @@
 
 import pygame
+import json
 
 from tiles.Specific_Tiles import *
 from tiles.Tile import Tile
+
+#TODO: CHANGE
+LEVEL_NAME = "Level1"
 
 
 
@@ -17,17 +21,44 @@ class Level:
         #set tile width and height
         self.tile_width,self.tile_height = Tile.NUM64,Tile.NUM64
 
-        #build map
-        self.tiles = self._build_map()
+        tiles_in_X = self.map_width/self.tile_width
+        tiles_in_y = self.map_height/self.tile_height
 
-    def _build_map(self):
-        map = []
-        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
-        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
-        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
-        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
-        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
-        return map
+        self.level_design = self._load_level(LEVEL_NAME)
+
+        #build map
+        self.tiles = self._build_map(int(tiles_in_X), int(tiles_in_y))
+
+    def _build_map(self,in_x,in_y):
+        map_level = []
+        for positionY in range(in_y):
+            field = []
+            for positionX in range(in_x):
+                tile_type = self.level_design[positionY][positionX]
+
+                if tile_type == "RoadUD":
+                    field.append(RoadUD(self))
+                elif tile_type == "FreeSpace":
+                    field.append(FreeSpace(self))
+
+            map_level.append(field)
+        return map_level
+
+    def _load_level(self,name):
+        path = "resources/" + name
+        try:
+            with open(path)as f:
+                level = json.load(f)
+        except FileNotFoundError:
+            return None
+        return level
+
+    def save_level(self):
+        path = "resources/"+LEVEL_NAME
+
+        with open(path, 'w') as f:
+            json.dump(self.level_design, f)
+
 
     def display_map(self):
         for y,val in enumerate(self.tiles):
