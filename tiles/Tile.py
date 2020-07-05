@@ -14,6 +14,8 @@ class Tile(Sprite):
         self.width: int = self.NUM64 #in bits
         self.height: int = self.NUM64
 
+
+        self.buildable = False
         self.screen = main.screen
         self.sprite = None
 

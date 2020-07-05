@@ -1,8 +1,9 @@
 
 import pygame
 
-from tiles.Road import Road
+from tiles.Specific_Tiles import *
 from tiles.Tile import Tile
+
 
 
 class Level:
@@ -17,13 +18,18 @@ class Level:
         self.tile_width,self.tile_height = Tile.NUM64,Tile.NUM64
 
         #build map
-        self.tiles = []
-        self.tiles.append([Road(self), Road(self)])
-        self.tiles.append([Road(self), Road(self)])
-        self.tiles.append([Road(self)])
+        self.tiles = self._build_map()
 
+    def _build_map(self):
+        map = []
+        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
+        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
+        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
+        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
+        map.append([FreeSpace(self), Road(self), FreeSpace(self)])
+        return map
 
     def display_map(self):
-        for x,val in enumerate(self.tiles):
-            for y, tile in enumerate(val):
+        for y,val in enumerate(self.tiles):
+            for x, tile in enumerate(val):
                 tile.blitme((x*self.tile_width, y*self.tile_height))
