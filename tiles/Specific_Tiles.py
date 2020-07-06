@@ -36,3 +36,12 @@ class SpawnMD(Tile):
         super().load_sprite("portal.png")
         self.IN = Directions.Middle
         self.OUT = Directions.Down
+
+class TownUM(Tile):
+    '''end destination of enemies, go from up to middle'''
+
+    def __init__(self, main):
+        super().__init__(main)
+        super().load_sprite("town.png")
+        self.IN = Directions.UP
+        self.OUT = Directions.Middle

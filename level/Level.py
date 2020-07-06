@@ -42,12 +42,14 @@ class Level:
                     field.append(FreeSpace(self))
                 elif tile_type == "SpawnMD":
                     field.append(SpawnMD(self))
+                elif tile_type == "TownUM":
+                    field.append(TownUM(self))
 
             map_level.append(field)
         return map_level
 
     def _load_level(self,name):
-        path = "resources/" + name
+        path = "resources/levels/" + name
         try:
             with open(path)as f:
                 level = json.load(f)
@@ -56,7 +58,7 @@ class Level:
         return level
 
     def save_level(self):
-        path = "resources/"+LEVEL_NAME
+        path = "resources/levels/"+LEVEL_NAME
 
         with open(path, 'w') as f:
             json.dump(self.level_design, f)

@@ -21,7 +21,7 @@ class Tile(Sprite):
 
     def load_sprite(self, name):
         try:
-            self.sprite = pygame.image.load("resources/"+name)
+            self.sprite = pygame.image.load("resources/sprites/"+name)
         except  pygame.error:
             print(f"No such file as {name} in resources")
             print("Terminating program")
