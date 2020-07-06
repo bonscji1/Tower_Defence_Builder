@@ -40,6 +40,8 @@ class Level:
                     field.append(RoadUD(self))
                 elif tile_type == "FreeSpace":
                     field.append(FreeSpace(self))
+                elif tile_type == "SpawnMD":
+                    field.append(SpawnMD(self))
 
             map_level.append(field)
         return map_level

@@ -6,6 +6,7 @@ class Directions(enum.Enum):
     Right = 2
     Down = 3
     Left = 4
+    Middle = 5
 
 
 class RoadUD(Tile):
@@ -13,7 +14,7 @@ class RoadUD(Tile):
 
     def __init__(self, main):
         super().__init__(main)
-        super().load_sprite("Route_Straight.png")
+        super().load_sprite("route_straight.png")
         self.IN = Directions.UP
         self.OUT = Directions.Down
 
@@ -24,5 +25,14 @@ class FreeSpace(Tile):
 
     def __init__(self, main):
         super().__init__(main)
-        super().load_sprite("Free_space.png")
+        super().load_sprite("free_space.png")
         self.buildable = True
+
+class SpawnMD(Tile):
+    '''tile for spawning enemies, spawn in middle and go down'''
+
+    def __init__(self, main):
+        super().__init__(main)
+        super().load_sprite("portal.png")
+        self.IN = Directions.Middle
+        self.OUT = Directions.Down
