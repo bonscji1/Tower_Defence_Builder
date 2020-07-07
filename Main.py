@@ -26,6 +26,8 @@ class Tower_Defence_Builder:
         self.screen.fill(self.background_color)
 
         self.level.display_map()
+        self.level.spawn_enemy()
+        self.level.move_enemies()
 
         pygame.display.flip()
 

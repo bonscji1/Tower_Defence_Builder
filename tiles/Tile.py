@@ -17,11 +17,11 @@ class Tile(Sprite):
 
         self.buildable = False
         self.screen = main.screen
-        self.sprite = None
+        self.image = None
 
     def load_sprite(self, name):
         try:
-            self.sprite = pygame.image.load("resources/sprites/"+name)
+            self.image = pygame.image.load("resources/sprites/" + name)
         except  pygame.error:
             print(f"No such file as {name} in resources")
             print("Terminating program")
@@ -29,4 +29,4 @@ class Tile(Sprite):
 
     def blitme(self, location):
         '''draw at location'''
-        self.screen.blit(self.sprite, location)
+        self.screen.blit(self.image, location)

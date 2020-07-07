@@ -6,7 +6,6 @@ class Directions(enum.Enum):
     Right = 2
     Down = 3
     Left = 4
-    Middle = 5
 
 
 class RoadUD(Tile):
@@ -31,17 +30,20 @@ class FreeSpace(Tile):
 class SpawnMD(Tile):
     '''tile for spawning enemies, spawn in middle and go down'''
 
-    def __init__(self, main):
+    def __init__(self, main, location):
         super().__init__(main)
         super().load_sprite("portal.png")
-        self.IN = Directions.Middle
+        self.spawn_min = (location[0]*super().NUM64, location[1]*super().NUM64)
+        self.spawn_max = (self.spawn_min[0] + super().NUM64, self.spawn_min[1] + super().NUM64)
+        self.IN = Directions.UP
         self.OUT = Directions.Down
 
 class TownUM(Tile):
     '''end destination of enemies, go from up to middle'''
+    #todo add colision model to reduce lives
 
     def __init__(self, main):
         super().__init__(main)
         super().load_sprite("town.png")
         self.IN = Directions.UP
-        self.OUT = Directions.Middle
+        self.OUT = Directions.Down
