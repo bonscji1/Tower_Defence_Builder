@@ -17,8 +17,6 @@ class RoadUD(Tile):
         self.IN = Directions.UP
         self.OUT = Directions.Down
 
-
-
 class FreeSpace(Tile):
     '''free space for building towers, tile'''
 
@@ -42,8 +40,11 @@ class TownUM(Tile):
     '''end destination of enemies, go from up to middle'''
     #todo add colision model to reduce lives
 
-    def __init__(self, main):
+    def __init__(self, main, location):
         super().__init__(main)
         super().load_sprite("town.png")
+        self.rect = self.image.get_rect()#returns 0,0,64,64 aka size of this block
+        self.rect[0] += location[0]*super().NUM64
+        self.rect[1] += location[1]*super().NUM64+self.rect.height/10#correction for the sprite, thez can move a little bit in
         self.IN = Directions.UP
         self.OUT = Directions.Down

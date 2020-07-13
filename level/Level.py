@@ -12,6 +12,7 @@ from enemies.Enemy import Enemy
 #TODO: CHANGE
 LEVEL_NAME = "Level1"
 ENEMY_NUMBER = 10
+TOTAL_LIVES = 5
 
 
 
@@ -34,7 +35,11 @@ class Level:
         # enemies and spawns
         self.spawns = Group()
         self.enemies = Group()
+        self.towns = Group()
         self.wave1 = 0
+
+        #main base
+        self.current_lives = TOTAL_LIVES
 
         #build map
         self.tiles = self._build_map(int(tiles_in_X), int(tiles_in_y))
@@ -58,7 +63,9 @@ class Level:
                     self.spawns.add(spawn)
 
                 elif tile_type == "TownUM":
-                    field.append(TownUM(self))
+                    town = TownUM(self, (positionX, positionY))
+                    field.append(town)
+                    self.towns.add(town)
 
             map_level.append(field)
         return map_level
@@ -93,3 +100,21 @@ class Level:
     def move_enemies(self):
         self.enemies.update((0,1))
         self.enemies.draw(self.screen)
+
+    def enemies_reached_base(self):
+        collided = pygame.sprite.groupcollide(self.towns, self.enemies, dokilla= False, dokillb= True)
+        if collided:
+            #i get results in a dictionary where key is attacked point and value is a list of attackers
+            for enemyList in collided.values():
+                for enemy in enemyList:
+                    self.lose_health(enemy.damage)
+
+    def lose_health(self, damage):
+        self.current_lives -= damage
+
+
+    def game_running(self):
+        if(self.current_lives<=0):
+            return False
+
+        return True

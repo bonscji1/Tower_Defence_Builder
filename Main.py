@@ -11,6 +11,8 @@ class Tower_Defence_Builder:
         pygame.init()
         pygame.display.set_caption("Tower Defence Builder")
 
+        self.running = True
+
         # display screen
         self.screen_size = self.screen_width, self.screen_height = 640, 320
 
@@ -21,13 +23,21 @@ class Tower_Defence_Builder:
         self.level = Level(self,self.screen_size)
 
 
-    def _update_screen(self):
-        '''re-draw screen'''
+    def _game_logic(self):
+        '''basic game logic, redraw, movent, etc'''
+        #redraw screen
         self.screen.fill(self.background_color)
-
         self.level.display_map()
+
+        #enemy logic
         self.level.spawn_enemy()
         self.level.move_enemies()
+        self.level.enemies_reached_base()
+
+        #turret logic
+
+        #game logic
+        self.running = self.level.game_running()
 
         pygame.display.flip()
 
@@ -35,13 +45,13 @@ class Tower_Defence_Builder:
 
     def run(self):
         '''Main loop'''
-        while True:
+        while (self.running):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.level.save_level()
                     sys.exit()
 
-            self._update_screen()
+            self._game_logic()
 
 if __name__ == "__main__":
     main = Tower_Defence_Builder()
